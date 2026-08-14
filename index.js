@@ -36,4 +36,5 @@ app.post("/cliente", async (req, res) => {
 
 app.listen(port, () => {
     console.log("API rodando na porta " + port)
+    let a = 0
 })
