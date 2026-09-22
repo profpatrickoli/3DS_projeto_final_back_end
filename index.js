@@ -67,7 +67,7 @@ app.post("/login", async (req,res) => {
             id: dados_bd.id,
             email: dados_bd.email
         } 
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1m' })
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2m' })
         return res.status(200).json({nome: dados_bd.nome, token: token})
 
     } catch (error) {
@@ -76,6 +76,50 @@ app.post("/login", async (req,res) => {
 })
 
 
+
+app.get("/cliente/perfil", autenticar, async (req, res)=>{
+    try {
+        const id = req.usuario.id
+        const result = await db.pool.query("SELECT * FROM cliente WHERE id = ?", [id]);
+        const perfil = result[0][0]
+        delete perfil.senha
+        res.status(200).json(perfil)
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro interno' });
+        throw err;
+    }
+})
+
+
+app.get("/cliente", async (req, res)=>{
+    try {
+        const result = await db.pool.query("SELECT * FROM cliente");
+        const perfil = result[0]
+        delete perfil.senha
+        res.status(200).json(perfil)
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro interno' });
+        throw err;
+    }
+})
+
+
 app.listen(port, () => {
     console.log("API rodando na porta " + port)
 })
+
+// https://dontpad.com/backendapi
+function autenticar(req, res, next){
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null){
+        return res.status(401).json({erro: "Token não enviado, usar Authorization Bearer <token>"})
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, usuario) => {
+        if (err) return res.status(403).json({erro: "Token inválido"})
+        req.usuario = usuario
+        next()
+    })   
+}
+
+// AULA DE 18/09: TESTAR O LOGIN E A AUTENTICAÇÃO NA ROTA /cliente/perfil
