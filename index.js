@@ -90,20 +90,6 @@ app.get("/cliente/perfil", autenticar, async (req, res)=>{
     }
 })
 
-
-app.get("/cliente", async (req, res)=>{
-    try {
-        const result = await db.pool.query("SELECT * FROM cliente");
-        const perfil = result[0]
-        delete perfil.senha
-        res.status(200).json(perfil)
-    } catch (err) {
-        res.status(500).json({ erro: 'Erro interno' });
-        throw err;
-    }
-})
-
-
 app.listen(port, () => {
     console.log("API rodando na porta " + port)
 })
