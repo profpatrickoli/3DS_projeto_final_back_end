@@ -46,62 +46,9 @@
         </nav>
     </header>
     <main class="d-flex justify-content-center align-items-center">
-        <form id = "form_login">
-            <h1 style="text-align: center;">Login</h1>
-            <label for="email">Email:</label>
-            <input type="email" id="email" required class="input_texto">
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" required class="input_texto">
-            <p  style="text-align: center;">Não possui cadastro? Cadastre-se <a href="cadastro.html">aqui</a></p>
-
-            <input type="submit" value="Entrar" id="btn_enviar" class="btn_enviar">
-            
-        </form>
+        <h1>Produtos deveriam aparecer aqui!</h1>
     </main>
     <footer> </footer>
-
-    <script>
-        function pegar_dados() {
-            const dados = {
-                email: document.getElementById("email").value,
-                senha: document.getElementById("senha").value
-            }
-            return dados
-        }
-        const form = document.getElementById("form_login")
-        const btn_enviar = document.getElementById("btn_enviar")
-        form.addEventListener("submit", async (event) => {
-            event.preventDefault() // evita o recarregamento da página
-            btn_enviar.disabled = true
-            btn_enviar.value = "Entrando..."
-            const dados = pegar_dados()
-            try {
-                const resposta = await fetch(
-                    "http://localhost:3000/login", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(dados)
-                    }
-                )
-                const json_resposta = await resposta.json()
-                if (!resposta.ok) {
-                    if (resposta.status == 401) {
-                        throw new Error(json_resposta.msg)
-                    } else {
-                        throw new Error("Erro inesperado na API")
-                    }
-                }
-                localStorage.setItem("nome_cliente", json_resposta.nome)
-                localStorage.setItem("token", json_resposta.token)
-                window.location.href = "index.html"
-            } catch (error) {
-                alert(error)
-            } finally {
-                btn_enviar.disabled = false
-                btn_enviar.value = "Entrar"
-            }
-        })
-    </script>
 
     <script src="./pages.js"></script>
 
