@@ -79,6 +79,18 @@
             <input type="submit" id="btn_enviar" value="Enviar Cadastro" class="btn_enviar">
             
         </form>
+
+        <!-- ALERTA TOAST -->
+        <div class="position-fixed" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1050;">
+            <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                <div class="d-flex">
+                    <div class="toast-body" id="toast-message">
+                        Mensagem
+                    </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>
+            </div>
+        </div>
+        <!-- FIM ALERTA TOAST -->
     </main>
     <footer> </footer>
 
@@ -108,10 +120,10 @@
                     body: JSON.stringify(dados)
                 })
                 if (!resposta.ok) {throw new Error("Erro na API")}
-                alert("O cadastro foi realizado!")
+                mostrarToast("✅ Cadastro enviado com sucesso!", "bg-success");
                 form_cadastro.reset()
             } catch(error) {
-                alert(error)
+                mostrarToast("❌ Falha ao enviar. " + error, "bg-danger");
             } finally {
                 btn_enviar.value = "Enviar Cadastro"
                 btn_enviar.disabled = false

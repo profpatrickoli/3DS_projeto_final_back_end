@@ -1,3 +1,17 @@
+// Necessário possuir o TOAST do Bootstrap no HTML para funcionar!
+function mostrarToast(mensagem, bgClass) {
+    const toastEl = document.getElementById("liveToast");
+    const toastMessage = document.getElementById("toast-message");
+    const bsToast = new bootstrap.Toast(toastEl);
+    toastMessage.textContent = mensagem;
+
+    // remove classes de cor antigas
+    toastEl.classList.remove("bg-success", "bg-danger");
+    toastEl.classList.add(bgClass);
+
+    bsToast.show();
+}
+
 function atualizar_navbar() {
     const nome = localStorage.getItem("nome_cliente")
     const token = localStorage.getItem("token")
