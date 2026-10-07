@@ -1,8 +1,11 @@
 // npm init
+// npm i dotenv
+const dotenv = require("dotenv")
+dotenv.config()
 // npm i express
 const express = require("express")
 const app = express()
-const port = 3000
+const port = process.env.API_PORT
 app.use(express.json())
 
 // npm i mysql2
@@ -14,14 +17,9 @@ const bcrypt = require("bcrypt")
 // npm i jsonwebtoken
 const jwt = require("jsonwebtoken")
 
-// npm i dotenv
-const dotenv = require("dotenv")
-dotenv.config()
-
 // npm i cors
 const cors = require("cors")
 app.use(cors())
-
 
 app.post("/cliente", async (req, res) => {
     try {
