@@ -8,6 +8,9 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE, // colocar o nome do seu BD
     multipleStatements: true
+    ssl: {
+        rejectUnauthorized: false
+    }
 })
 
 module.exports = Object.freeze({
