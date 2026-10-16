@@ -78,13 +78,33 @@ app.post("/login", async (req,res) => {
 app.get("/cliente/perfil", autenticar, async (req, res)=>{
     try {
         const id = req.usuario.id
-        const result = await db.pool.query("SELECT * FROM cliente WHERE id = ?", [id]);
-        const perfil = result[0][0]
+        const resultado = await db.pool.query("SELECT * FROM cliente WHERE id = ?", [id]);
+        const perfil = resultado[0][0]
         delete perfil.senha
         res.status(200).json(perfil)
-    } catch (err) {
+    } catch (error) {
         res.status(500).json({ erro: 'Erro interno' });
-        throw err;
+        throw error;
+    }
+})
+
+app.get("/produto", async (req, res) => {
+    try {
+        const resultado = await db.pool.query("SELECT * FROM produto")
+        res.status(200).json(resultado[0])
+    } catch (error) {
+        res.status(500).json({erro: error.message})
+    }
+})
+
+app.get("/produto/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        const resultado = await db.pool.query("SELECT * FROM produto WHERE id = ?", [id])
+        const produto = resultado[0][0]
+        res.status(200).json(produto)
+    } catch (error) {
+        res.status(500).json({erro: error.message})
     }
 })
 
