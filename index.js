@@ -100,7 +100,7 @@ app.get("/produto", async (req, res) => {
             params.push(`%${busca}%`)
         } 
         if (ordenacao) {
-            if (ordenacao == "DESC") {
+            if (ordenacao == "maior preco") {
                 sql += " ORDER BY preco DESC"
             } else {
                 sql += " ORDER BY preco ASC"
