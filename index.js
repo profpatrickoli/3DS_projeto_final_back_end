@@ -21,6 +21,10 @@ const jwt = require("jsonwebtoken")
 const cors = require("cors")
 app.use(cors())
 
+const path = require("path")
+app.use("/img", express.static(path.join(__dirname, 'img')))
+// http://localhost:3000/img/1/1.jpg
+
 app.post("/cliente", async (req, res) => {
     try {
         const cliente = req.body
