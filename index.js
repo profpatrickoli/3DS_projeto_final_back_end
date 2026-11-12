@@ -129,6 +129,24 @@ app.get("/produto/:id", async (req, res) => {
     }
 })
 
+// esquema lógico da rota /compra
+app.post("/compra", autenticar, async (req,res) => {
+    // Dados necessários para compra:
+        // token do cliente
+        // forma_pagamento
+        // puxar a data do servidor para salvar no bd
+        // lista de produtos (id e quantidade de cada um)
+
+    // busca por cada produto no banco de dados (SELECT)
+        // pegar o valor de cada produto, multiplicar pela quantidade comprada
+        // reduzir a quantidade em estoque (UPDATE)
+    // fazer a soma do valor total
+    // cadastrar a compra na tabela "compra"
+    // cadastrar cliente e produto na tabela "compra_produto"
+    // se tudo der certo: compra realizada com sucesso
+})
+
+
 app.listen(port, () => {
     console.log("API rodando na porta " + port)
 })
